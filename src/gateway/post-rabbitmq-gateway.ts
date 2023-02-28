@@ -25,6 +25,8 @@ export class PostGatewayRabbitMQ  implements PostGatewayInterface {
        return success(payload);
       }
 
+      
+
       async getPosts(): Promise<HttpResponse> {
         const rabbitClient = await RabbmitMQHelper.getClient();
    
