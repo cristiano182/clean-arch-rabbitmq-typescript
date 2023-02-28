@@ -1,4 +1,4 @@
-FROM node:14-alpine as my-api
+FROM node:16-alpine as my-api
 
 WORKDIR /usr/src/app
 

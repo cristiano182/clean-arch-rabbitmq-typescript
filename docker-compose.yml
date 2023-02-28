@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.9.13-management-alpine
+    container_name: my-rabbitmq
+    restart: always
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    networks:
+      - rabbitmq_net
+    environment:
+      - RABBITMQ_DEFAULT_PASS=password
+      - RABBITMQ_DEFAULT_USER=username
   my-redis:
     container_name: my-redis
     image: redis
@@ -9,6 +21,8 @@ services:
       - '6379:6379'
     volumes: 
       - redis-cache:/data
+    networks:
+      - rabbitmq_net
   my-api:
     container_name: my-api
     restart: always
@@ -26,12 +40,17 @@ services:
       - my-redis
     ports:
       - '3000:3000'
+    networks:
+      - rabbitmq_net
     volumes:
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
     depends_on:
       - my-redis
-    command: npm run dev
+    command: npm run dev:serve
 volumes:
   redis-cache:
     driver: local
+networks:
+  rabbitmq_net:
+    driver: bridge
