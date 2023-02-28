@@ -1,0 +1,30 @@
+{
+  "name": "clean-arch-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll --collectCoverage",
+    "dev:build": "tsc",
+    "dev": "ts-node src/main.ts",
+    "serve": "lib/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.2",
+    "@types/supertest": "^2.0.12",
+    "jest": "^29.4.3",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@types/ioredis": "^5.0.0",
+    "express": "^4.18.2",
+    "ioredis": "^5.3.1"
+  }
+}

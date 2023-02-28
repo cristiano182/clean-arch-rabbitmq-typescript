@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  my-redis:
+    container_name: my-redis
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes: 
+      - redis-cache:/data
+  my-api:
+    container_name: my-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: my-api
+    environment:
+      - PORT=3000
+      - REDIS_HOST=my-redis
+      - REDIS_PORT=6379
+    expose:
+      - '3000'
+    links:
+      - my-redis
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+    depends_on:
+      - my-redis
+    command: npm run dev
+volumes:
+  redis-cache:
+    driver: local
